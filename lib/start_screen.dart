@@ -9,35 +9,38 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'homepage.dart';
 
 class StartScreen extends StatefulWidget {
-
   @override
   _StartScreenState createState() => _StartScreenState();
 }
 
 class _StartScreenState extends State<StartScreen> {
   static const String Theme_KEY = 'theme';
-  Bgm audio=Bgm();
-  Future<void> setTheme () async {
+  Bgm audio = Bgm();
+  Future<void> setTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool(Theme_KEY, isDark);
-
   }
+
   Future<void> getTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       isDark = prefs.getBool(Theme_KEY) ?? 0;
     });
   }
-  String volu='volume_down';
-  Icon volume =Icon(Icons.volume_down,
-    color: Colors.red,
-    size: 50.0,);
-  Icon volumeclosed =Icon(Icons.volume_off,
-    color: Colors.red,
-    size: 50.0,);
-  bool on=true;
-bool isDark= true;
 
+  String volu = 'volume_down';
+  Icon volume = Icon(
+    Icons.volume_down,
+    color: Colors.red,
+    size: 50.0,
+  );
+  Icon volumeclosed = Icon(
+    Icons.volume_off,
+    color: Colors.red,
+    size: 50.0,
+  );
+  bool on = true;
+  bool isDark = true;
 
   @override
   Widget build(BuildContext context) {
@@ -48,15 +51,17 @@ bool isDark= true;
       extendBodyBehindAppBar: true,
       body: Container(
         height: deviceHeight,
-        width: deviceWidth ,
+        width: deviceWidth,
         decoration: BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
-            image:isDark? AssetImage(
-              'assets/images/day.jpg',
-            ): AssetImage(
-              'assets/images/night.jpg',
-            ),
+            image: isDark
+                ? AssetImage(
+                    'assets/images/day.jpg',
+                  )
+                : AssetImage(
+                    'assets/images/night.jpg',
+                  ),
           ),
         ),
         child: Padding(
@@ -65,89 +70,95 @@ bool isDark= true;
               vertical: 5,
             ),
             child: Stack(
-              children: [Column(
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: on? IconButton(icon: volume , onPressed:() =>{
-                      print('off'),
-                    setState(() {
-                      on=false;
-                      audio.pause();
-                    }),
-
-                    }) : IconButton(icon: volumeclosed , onPressed:() =>{
-                      print('on'),
-                      setState(() {
-                        on=true;
-                        audio.play('audio/Gaming.mp3');
-
-                      }),
-
-                    }
-                      ),
-                  ),
-
-                  SizedBox(
-                    height: deviceHeight/8,
-                  ),
-                  Image.asset(
-                    'assets/images/bird.png',
-                    width: deviceWidth / 2,
-                  ),
-                  Image(image:AssetImage('assets/images/name.bng.png'),width: deviceWidth /2,),
-
-                  Container(
-                    child: DayNightSwitch(
-                      height: 70,
-                      width: deviceWidth/4,
-                      onSelection: (isCheck){
-                        setState(() {
-                          isDark = isCheck;
-                         setTheme();
-                          print(isDark);
-                          print(isCheck);
-                        });
-
-                      },
+              children: [
+                Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: on
+                          ? IconButton(
+                              icon: volume,
+                              onPressed: () => {
+                                    print('off'),
+                                    setState(() {
+                                      on = false;
+                                      audio.pause();
+                                    }),
+                                  })
+                          : IconButton(
+                              icon: volumeclosed,
+                              onPressed: () => {
+                                    print('on'),
+                                    setState(() {
+                                      on = true;
+                                      audio.play('audio/Gaming.mp3');
+                                    }),
+                                  }),
                     ),
-                  ),
-                
-                SizedBox(height: 50,),
-
-                Center(
-                  child: Row(
-                    children: [
-                      MenuButton(
-                        width: 165,
-                        color: Colors.green,
-                        textColor: Colors.white,
-                        text: 'Start Game',
-                        onPress: () {
-                          Navigator.of(context).pushNamed(HomePage.ROUTE_NAME);
+                    SizedBox(
+                      height: deviceHeight / 8,
+                    ),
+                    Image.asset(
+                      'assets/images/bird.png',
+                      width: deviceWidth / 2,
+                    ),
+                    Image(
+                      image: AssetImage('assets/images/name.bng.png'),
+                      width: deviceWidth / 1.5,
+                    ),
+                    Container(
+                      child: DayNightSwitch(
+                        height: 70,
+                        width: deviceWidth / 4,
+                        onSelection: (isCheck) {
+                          setState(() {
+                            isDark = isCheck;
+                            setTheme();
+                            print(isDark);
+                            print(isCheck);
+                          });
                         },
                       ),
-                      SizedBox(
-                          width: 16,
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Center(
+                      child: Row(
+                        children: [
+                          MenuButton(
+                            width: 165,
+                            color: Colors.green,
+                            textColor: Colors.white,
+                            text: 'Start Game',
+                            onPress: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            width: 16,
+                          ),
+                          MenuButton(
+                            width: 165,
+                            color: Colors.redAccent,
+                            textColor: Colors.white,
+                            text: 'Quit',
+                            onPress: () {
+                              SystemNavigator.pop();
+                            },
+                          ),
+                        ],
                       ),
-                      MenuButton(
-                        width: 165,
-                        color: Colors.redAccent,
-                        textColor: Colors.white,
-                        text: 'Quit',
-                        onPress: () {
-                          SystemNavigator.pop();
-                        },
-                      ),
-
-                    ],
-                  ),
+                    ),
+                    Spacer(),
+                  ],
                 ),
-                  Spacer(),
-                ],
-              ),],
-            )
-        ),
+              ],
+            )),
       ),
     );
   }
@@ -160,7 +171,6 @@ bool isDark= true;
     getTheme();
   }
 }
-
 
 class MenuButton extends StatelessWidget {
   final double width;

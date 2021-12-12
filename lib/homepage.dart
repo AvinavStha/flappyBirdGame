@@ -202,6 +202,7 @@ Widget build(BuildContext context) {
     child: Scaffold(
       body: Stack(
         children: [
+
           AnimatedContainer(
             alignment: Alignment(0, birdYAxis),
             duration: Duration(milliseconds: 0),
@@ -270,6 +271,19 @@ Widget build(BuildContext context) {
               size: lowerBarrierTwoHeight,
             ),
           ),
+    /*  Padding(
+        padding: const EdgeInsets.only(left: 100,),
+        child: FlatButton(
+          splashColor: Colors.red,
+          color: Colors.yellow,
+          // textColor: Colors.white,
+          child: Text('level 1',),
+          onPressed: () {
+
+
+          },
+        ),
+      ),*/
           Positioned(
             bottom: 16,
             right: 16,

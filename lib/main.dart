@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'homepage.dart';
+import 'chooseLevel.dart';
 
 void main() {
   if(kIsWeb){
@@ -25,10 +26,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: StartScreen(),
-      routes: {
-        HomePage.ROUTE_NAME: (context) => HomePage(),
-      },
+      home: ChooseLevel(),
+      // routes: {
+      //   HomePage.ROUTE_NAME: (context) => HomePage(),
+      // },
     );
   }
 }
